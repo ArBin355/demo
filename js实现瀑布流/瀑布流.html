@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>瀑布流</title>
+	<style>
+		div {
+			width: 200px;
+			position: absolute;
+			transition: .5s;
+			background: #ccc;
+			border-radius: 5px;
+		}
+	</style>
+</head>
+<body>
+	<script>
+		/**
+		 * 随机生成20个div 
+		 * div的高度随机，位于100px到300px之间
+		 */
+		function generator() {
+			var divNum = 50;
+			var i;
+			var oDiv;
+			var fragment = document.createDocumentFragment();
+			for(i = 0;i < divNum;i++) {
+				oDiv = document.createElement('div');
+				oDiv.style.height = Math.floor(Math.random() * 200 + 100) + 'px'; // 随机生成100～300px高度的div
+				oDiv.innerHTML = i + 1;
+				fragment.appendChild(oDiv);
+			}
+			document.body.appendChild(fragment);
+		}
+		/**
+		 * 让div进行重组
+		 * spacing设置两个div的下、右高度为10px
+		 * 
+		 */
+		function recombine() {
+			var spacing = 10; 
+			var aDiv = document.getElementsByTagName('div'); 
+			var viewWidth = document.documentElement.clientWidth; // 获取浏览器视口宽度
+			var lineNum = Math.floor(viewWidth / (200 + spacing)); // 每行可以放置div的数量, 向下取整
+			if(lineNum <= 0) {
+				return ;
+			}
+			// 居中
+			var leftMargin  = (viewWidth - lineNum * (200 + spacing)) / 2;
+			var arrHeight = new Array();
+			// 开始重组
+			for(var i = 0;i < aDiv.length;i++) {
+				// 如果第一行已经排好了
+				if(arrHeight.length == lineNum) {
+					// 获取数组最低高度的下标
+					var minHIndex = findMinHeightIndex(arrHeight);
+					aDiv[i].style.left = leftMargin +  (200 + spacing) * minHIndex + 'px';
+					aDiv[i].style.top = arrHeight[minHIndex] + 'px';
+					// 注意单位
+					arrHeight[minHIndex] = parseInt(aDiv[i].style.height) + arrHeight[minHIndex] + spacing;
+				} else {
+					// 排列第一行
+					aDiv[i].style.left = leftMargin + arrHeight.length * (200 + spacing) + 'px';
+					aDiv[i].style.top = 0;
+					arrHeight[i] = parseInt(aDiv[i].style.height) + spacing;
+				}
+			}
+		} 
+		  /*查找当前数组里最小高度的下标*/
+		function findMinHeightIndex(arr) {
+			var minIndex = 0;
+			for(var i = 1;i < arr.length;i++) {
+				if(arr[minIndex] > arr[i]) {
+					minIndex = i;
+				}	
+			}
+			return minIndex;
+		}
+		
+		function lazy() {
+			// 视口高度
+			var clientHeight = document.documentElement.clientHeight;
+			// 从顶点到视口处，整个高度 - 视口高度
+			var scrollTop = document.body.scrollTop;
+			// 整个页面的高度
+			var scrollHeight = document.body.scrollHeight;
+			// 如果滚动的那么多高度已经超过了页面总高度
+			if(clientHeight + scrollTop >= scrollHeight - 10) {
+				// generator后自动重组，因为document.getElementsByTagName('div')
+				// 获取的是所有的div
+				generator();
+			}
+		}
+		/*初始化*/
+		function init() {
+			generator();
+			recombine();
+			window.onresize = function() {
+				recombine();
+			};
+			window.onscroll = function() {
+				lazy();
+				recombine();
+			};
+		}
+		init();
+	</script>
+</body>
+</html>
