@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title></title>
+<style>
+.box{
+  position: relative;
+  perspective: 800px;
+}
+@keyframes box{
+	0% {
+		transform: rotateX(0deg);
+	}
+	25% {
+		transform: rotateX(180deg) rotateY(180deg);
+	}
+	50% {
+		transform: rotateX(180deg) rotateY(360deg);
+	}
+	75% {
+		transform: rotateX(360deg) rotateY(180deg);
+	}		
+	100% {
+		transform: rotateX(360deg) rotateY(360deg);
+	}
+}
+.container{
+  margin:200px auto;
+  width: 450px;
+  height: 450px;
+  transform-style:preserve-3d;
+  animation: box 8s infinite linear;
+  transform-origin: 50% 50% 75px;
+}
+.side{
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  text-align: center;
+  line-height: 150px;
+}
+.top{
+  left: 150px;
+  top: 0;
+  transform: rotateX(-90deg);
+  transform-origin: bottom;
+  background-color:yellow;
+}
+.bottom{
+  left: 150px;
+  top: 300px;
+  transform: rotateX(90deg);
+  transform-origin: top;
+  background-color:orange;
+}
+.left{
+  left: 0;
+  top: 150px;
+  transform: rotateY(90deg);
+  transform-origin: right;
+  background-color:blue;
+}
+.right{
+  left: 300px;
+  top: 150px;
+  transform: rotateY(-90deg);
+  transform-origin: left;
+  background-color:green;
+}
+.front{
+  opacity:0.8;
+  left: 150px;
+  top: 150px;
+  transform: translateZ(150px);
+  background-color:gray;
+}
+.back{
+  left: 150px;
+  top: 150px;
+  background-color:red;
+}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="container">
+    <div class="side top">上</div>
+    <div class="side bottom">下</div>
+    <div class="side left">左</div>
+    <div class="side right">右</div>
+    <div class="side front">前</div>
+    <div class="side back">后</div>
+  </div>
+</div>
+</body>
+</html>
