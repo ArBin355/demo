@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			#btnShowDailog{
+				
+			}
+			#showDailog{
+				background: white;
+				display: none;
+				width: 600px;
+				border: solid 1px gray;
+				border-radius:10px ;
+				position: absolute;
+				z-index: 1000;
+				top:0;
+				left: 0;
+			}
+			#showDailog>div{
+				height: 60px;
+			}
+			#showDailog h3{
+				margin: 0;
+				margin-top: 10px;
+				padding-left:20px ;
+			}
+			#showDailog>div>span{
+				width: 100px;
+				height: 60px;
+				display: inline-block;
+				line-height: 60px;
+				text-align: right;
+			}
+			#showDailog>div>input{
+				width: 70%;
+				height: 36px;
+				border-radius: 3px;
+				border: solid 1px gray;
+				margin-left: 10px;
+			}
+			#showDailogbg{
+				width: 100%;
+				background: rgba(0,0,0,0.3);
+				display: none;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 999;
+			}
+			#showDailog button{
+				width: 80px;
+				height: 40px;
+				
+			}
+			#showDailog>div:last-child{
+				text-align: right;
+				margin-right: 20px;
+			}
+		</style>
+		
+		<script type="text/javascript">
+			window.onload=function(){
+				var btnShowDailog=document.getElementById("btnShowDailog");
+				var showDailogbg=document.getElementById("showDailogbg");
+				var showDailog=document.getElementById("showDailog");
+				var btnsubmit=document.getElementById("btnsubmit");
+				
+				var swidth=document.documentElement.clientWidth;
+				var sheight=document.documentElement.clientHeight;
+				
+//				获取div的实际宽度和高度
+//				var divwidth=showDailog.offsetWidth;
+//				var divheight=showDailog.offsetHeight;
+//				console.log(divwidth);
+//				console.log( divheight);
+				
+				btnShowDailog.onclick=function(){
+					showDailogbg.style.display="block";
+					showDailogbg.style.height=sheight+"px";
+					
+					//模态框
+					showDailog.style.display="block";
+					showDailog.style.top=(sheight-showDailog.offsetHeight)/2+"px";
+					showDailog.style.left=(swidth-showDailog.offsetWidth)/2+"px";
+				}
+				
+				btnsubmit.onclick=function(){
+					showDailogbg.style.display="none";
+					showDailog.style.display="none";
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<button id="btnShowDailog">应聘</button>
+		<div id="showDailogbg">
+			
+		</div>
+		<div id="showDailog">
+			<div><h3>个人信息</h3></div>
+			<div><span >姓名：</span><input type="text" name="" id="" value="" /></div>
+			<div><span >手机号码：</span><input type="text" name="" id="" value="" /></div>
+			<div><span >邮箱：</span><input type="text" name="" id="" value="" /></div>
+			<div><span >项目经验：</span><input type="text" name="" id="" value="" /></div>
+			<div><span >个人介绍：</span><input type="text" name="" id="" value="" /></div>
+			<div><button id="btnsubmit">提交</button></div>
+			
+		</div>
+	</body>
+</html>
